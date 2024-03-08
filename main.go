@@ -20,10 +20,19 @@ var tasks = []Task{} // In-memory storage for tasks
 const Dport = ":8012"
 
 func main() {
+	http.HandleFunc("/", DJHandler)
 	http.HandleFunc("/tasks", tasksHandler)
 	http.HandleFunc("/task/", taskHandler)
 	fmt.Printf("Server is starting on port: %v\n", Dport) // Added newline for better terminal output
 	http.ListenAndServe(Dport, nil)
+}
+
+func DJHandler(w http.ResponseWriter, r *http.Request) {
+	instruction := `Hello, this is the guide of Task API
+					Student ID: 500227799
+					Github Repository: https://github.com/DhruvJobanputra/goCRUD`
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprint(w, instruction)
 }
 
 // Handle requests to the /tasks endpoint
